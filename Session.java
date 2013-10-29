@@ -1,0 +1,78 @@
+public class Session{
+
+  
+	private Time time;
+  
+	private Cinema cinema;
+  
+	private Movie movie;
+
+  
+	public Session(Time time, Cinema cinema, Movie movie){
+    
+	this.time = time;
+    
+	this.cinema = cinema;
+    
+	this.movie = movie;
+  
+}
+
+  
+public final Time getTime() {
+   
+ 	return time;
+ 
+}
+
+  
+public final void setTime(final Time time) {
+   
+ 	this.time = time;
+  
+}
+
+  
+public final Cinema getCinema() {
+   
+ 	return cinema;
+  
+}
+
+  
+public final void setCinema(final Cinema cinema) {
+   
+ 	this.cinema = cinema;
+ 
+}
+  
+  
+public final Cineplex getCineplex() {
+    
+  return this.cinema.getCineplex();
+  
+}
+
+
+  
+public final Movie getMovie() {
+    
+	return movie;
+ 
+ }
+
+  
+public final void setMovie(final Movie movie) {
+    
+	this.movie = movie;
+  
+}
+
+  
+public void printSession(){
+    
+	System.out.println(movie.getName()+' '+time+' '+cinema.getCinemaId()+' '+cinema.getCineplex());
+  }
+
+
+}
