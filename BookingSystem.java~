@@ -1,9 +1,235 @@
 public class BookingSystem{
-  	public void static main(String arg[]){
-<<<<<<< HEAD
-      //这是我改的
-=======
-	public String = "Hello world";
->>>>>>> Test
-	}
+  
+  private static DataBase db = new DataBase();
+  private boolean notLoggedIn = true;
+  private ArrayList<Ticket> cart = new ArrayList<Ticket>();
+  private Movie currentMovie;
+
+  public static void mainMenu(){
+    boolean continueFlag = true;
+
+    while(continueFlag){
+      System.out.println("Booking System:");
+      System.out.println("1. Select movie from a Cineplex");
+      System.out.println("2. Show all on showing movies");
+      System.out.println("3. Check booking history");
+      System.out.println("4. Back to main meun");
+
+      switch(App.selectionHandle("Enter a number", 4)){
+        case 1:              
+          printThenSelectMovieFromCineplex();
+          break;
+        case 2:              
+          printThenSelectFromAllMovie();
+          break;
+        case 3:
+          checkBookingHistory();
+          break;
+        case 4:
+          continueFlag = false;
+          break;
+      }
+    }
+  }
+
+  public static Movie printThenSelectMovieFromCineplex(){
+
+    System.out.println("Choose Cineplex:");
+    int numHeader = 0;
+    for(Cineplex c : db.getCineplexDB()){
+      System.out.println(++numHeader + ". " + c.getCineplexName());
+    }
+
+    int choice = App.selectionHandle("Enter a number:", db.getCineplexDB().length);
+
+    Cineplex cineplex = db.getCineplexDB().get(choice-1);
+
+    System.out.println("Movies on show in cineplex " + cineplex.getCineplexName());
+    ArrayList<Movie> movieList = new ArrayList<Movie>();
+    numHeader = 0;
+    for(Session s : db.getSessionDB()){
+      if(cineplex.containCinema(s.getCinema())){
+        System.out.println(++numHeader + ". " + s.getMovie().getName());
+        movieList.add(s.getMovie());
+      }
+    }
+    
+    choice = App.selectionHandle("Enter a number:", movieList.length);
+
+    currentMovie = movieList.get(choice-1);
+    printThenSelectSession(currentMovie);
+  }
+
+  public static void printThenSelectFromAllMovie(){
+    
+    System.out.println("Choose Movie:");
+    int numHeader = 0;
+    for(Movie m : db.getMovieDB()){
+      System.out.println(++numHeader + ". " + m);
+    }
+    
+    int choice = App.selectionHandle("Enter a number:", db.getMovieDB().length);
+    currentMovie = db.getMovieDB().get(choice-1);
+    printThenSelectSession(currentMovie);
+  }
+
+  public static void printThenSelectSession(Movie movie){
+
+    ArrayList<Session> sessionList = new ArrayList<Session>();
+
+    for(Session s : db.getSessionDB()){
+      if(s.getMovie() == movie) sessionList.add(s);
+    }
+
+    System.out.println("====================MOVIE====================");
+    System.out.println(movie);
+    System.out.println("====================SESSION=====================");    
+    for(Session s : sessionList)
+      System.out.println(s);
+
+
+    int choice = App.selectionHandle("Enter a number:", sessionList.length);
+    
+    printSeatLayoutThenSelectSeat(sessionList.get(choice-1));
+  }
+  
+  public static void printSeatLayoutThenSelectSeat(Session session){
+    int currentLevel = 3;
+
+    ArrayList<Seat> seatList = new ArrayList<Seat>;
+    
+    for(Seat s : db.getSeatDB())
+      seatList.add(s);
+
+    // Layout printing under construction
+
+    System.out.println("Action:");
+    System.out.println("1. Select Seat from this session");
+    System.out.println("2. Others..");
+
+    if(App.selectionHandle("Enter a number:", 2) == 1){
+      seatsPerRow = session.getCinema().getSeatsPerRow();
+      int row = App.selectionHandle("Enter row number:", seatsPerRow);
+      int col = App.selectionHandle("Enter column number:", session.getCinema().getNumOfColumn());
+
+      for(Seat s : seatList)
+        if(s.getRow(seatsPerRow) == row && s.getCol(seatsPerRow) == col)
+          Seat seatOfChoice = s;
+
+      if(notLoggedIn) customerLogin();
+    
+      Ticket ticket = new Ticket(seatOfChoice, customerType);
+      System.out.println("The ticket has been added to your cart\n");
+    
+      System.out.println("Action:");
+      System.out.println("1. Select Another Seat from this session");
+      System.out.println("2. Go back to select another session for");
+        
+      switch(App.selectionHandle("Enter a number", 2))
+        addToCart()
+            buyTicket(seatOfChoice);
+      break;      
+    }else{
+      navigation();
+    }
+
+
+
+
+  }
+
+  public static void buyTicket(Seat seatOfChoice, int customerType){
+
+    System.out.println(ticket);
+
+    Customer customer = customerLogin();
+
+    System.out.println("Choose payment method");
+
+    // how show customer pay?
+    
+    
+  }
+
+  public static void customerLogin(){
+
+    // need to add validation for all the input
+    
+    Scanner sc = new Scanner(System.in);
+    boolean customerDoesNotExist = false;
+    Customer customer;
+
+    System.out.println("Please enter your full name:");
+    customerName = sc.nextLine();
+
+    for(Customer c : db.getCustomerDB()){
+      if(c.name == customerName){
+        customerDoesNotExist = false;
+        customer = c;
+      }
+    }
+
+    if(customerDoesNotExist){
+      System.out.println("Congragulation on your first purchase at Cineplex!");
+      System.out.println("For us to serve you better, we would like to create an account for you now\n");
+      
+      System.out.println("======================Account Registration=========================");
+      System.out.println("Name: " + customerName + "\n");
+
+      
+      System.out.println("Please enter your mobile number:");
+      int mobile = sc.nextInt();
+      
+      System.out.println("Plase enter your email:");
+      String email = sc.next();
+      
+      // add email validation here
+      
+      System.out.println("Please enter your date of birth (in numerial form)");
+      System.out.println("Year:");
+      int year = sc.nextInt();
+      System.out.println("Month:");
+      int month = sc.nextInt();
+      System.out.println("Day");
+      int day = sc.nextInt();
+      Calendar dob = new GregorianCalendar(year, month, day);
+
+      customer = new Customer(customerName, mobile, email, dob);
+    }
+    return customer;
+  }
+
+  public static void navigation(int currentLevel){
+
+    int numHeader;
+    System.out.println("====================NAVIGATION====================");
+    for(int i = currentLevel; i <= 5; i++){
+      numHeader = i - currentLevel + 1;
+      if(i==1) System.out.println(numHeader+". Go back to select another time for this movie");
+      if(i==2) System.out.println(numHeader+". Go back to all movie list");
+      if(i==3) System.out.println(numHeader+". Go back to select movie from cineplex");
+      if(i==4) System.out.println(numHeader+". Go back to main menu");
+      if(i==5) System.out.println(numHeader+". Go to my cart");
+    }
+
+    switch(App.selectionHandle("Enter a number", 6-currentLevel)){
+      case 1:
+        printThenSelectSession(currentMovie);
+        break;
+      case 2:
+        printThenSelectFromAllMovie();
+        break;
+      case 3:
+        printThenSelectMovieFromCineplex();
+        break;
+      case 4:
+        mainMenu();
+        break;
+      case 5:
+        cart();
+        break;
+    }
+
+  }
+  
 }

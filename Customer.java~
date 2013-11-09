@@ -1,6 +1,4 @@
 import java.util.GregorianCalendar;
-import java.util.Calendar;
-import java.util.ArrayList;
 
 public class Customer {
   
@@ -10,7 +8,10 @@ public class Customer {
   private Calendar dob;
 
   // STATIC
-  public static final int STUDENT_AGE = 24;
+  public static final int NORMAL = 0;
+  public static final int STUDENT = 1;
+  public static final int SENIOR = 2;
+  public static final int STUDENT_AGE = 21;
   public static final int SENIOR_AGE = 60;
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -47,17 +48,23 @@ public class Customer {
 
   ////////////////////////////////////////////////////////////////////////////////
     
-  public CustomerType getType(){
+  public void printBookingHistory(ArrayList<Payment> paymentDB){
+    for(Payment p : paymentList)
+      if(p.getCustomer().getName() == this.name)
+        p.printInvoice();
+  }
+
+  public int getType(){
 
     Calendar now = new GregorianCalendar();
     int age = now.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
         
-    if(age < STUDENT_AGE){
-      return CustomerType.STUDENT;
+    if(age < STUDNET_AGE){
+      return STUDENT;
     }else if(age > SENIOR_AGE){
-      return CustomerType.SENIOR;
+      return SENIOR;
     }else{
-      return CustomerType.NORMAL;
+      return NORMAL;
     }
     
   }

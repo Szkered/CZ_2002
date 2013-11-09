@@ -1,34 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author mengxingxu
- */
 public class Ticket {
-    private Session session;
-    private double price;
-    private Seat seat;
-    
-    public Ticket(){
-    }
-    
-    public Ticket(Movie movie, double price, Customer customer,
-                        int sessionID, int seatID){
-        this.price = price;
-    }
-    
-    public void printTicketInfo(){
-        
-    }
-    
-    public double getPrice(){
-        return price;
-    }
-    
-    public void calculatePrice(String customerType){
-        
-    }
+  
+  private double price;
+  private Seat seat;
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  public Ticket(Seat seat, CustomerType customerType){
+    DiscountRateCalculator calculator = new DiscountRateCalculator(seat.getSession(), customerType);
+    double basicPrice = seat.getSession().getMovie().getBasicPrice();
+    this.seat = seat;
+    this.price = basicPrice * calculator.getDiscountRate();
+  }
+  
+  public double getPrice(){
+    return this.price;
+  }
+
+  public Seat getSeat(){
+    return this.seat;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+
+  public String toString(){
+    return seat.getSession() + "\n====================SEAT=====================\n" + seat
+        + "\n====================PRICE=====================\n" + price;
+  }
 }

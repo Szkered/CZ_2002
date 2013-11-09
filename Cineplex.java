@@ -1,55 +1,55 @@
-
 public class Cineplex {
-	private int cineplexId;
-	private String location;
-	private Cinema[] hall;
-	public Cineplex(int cineplexId) {
-		this.cineplexId = cineplexId;
-	}
-	public Cineplex() {}
-	
-	public int getCineplexId() {
-		return cineplexId;
-	}
-	public void setCineplexId(int cineplexId) {
-		this.cineplexId = cineplexId;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public Cinema[] getHall() {
-		return hall;
-	}
-	public void setHall(Cinema[] hall) {
-		this.hall = hall;
-	}
-	
-	
-	public void printCineplexInfo(){
-		System.out.println("The NO."+cineplexId+" is at "+location);
-	}
-	
-	public void printAllMovive(Session[] sessionList){
-		
-	}
-	
-	public void printOnShowingMoive(){
-		
-	}
-	
-	public void printComingSoomMoive(){
-		
-	}
+  private int cineplexID;
+  private String cineplexName;
+  private String address;
+  private Cinema[] hall;
 
+  public Cineplex(int cineplexID, String cineplexName, String address, Cinema[] cinemaList) {
+    this.cineplexID = cineplexID;
+    this.cineplexName = cineplexName;
+    this.address = address;
+    this.hall = cinemaList;
+  }
+
+  public final String getCineplexName() {
+    return cineplexName;
+  }
+
+  public final void setCineplexName(final String cineplexName) {
+    this.cineplexName = cineplexName;
+  }
 	
-	
-	
-	
-	
-	
+  public int getCineplexId() {
+    return cineplexID;
+  }
+  public void setCineplexId(int cineplexID) {
+    this.cineplexID = cineplexID;
+  }
+  public String getAddress() {
+    return address;
+  }
+  public void setAddress(String address) {
+    this.address = address;
+  }
+  
+  public Cinema[] getHall() {
+    return hall;
+  }
+  
+  public void setHall(Cinema[] hall) {
+    this.hall = hall;
+  }
+
+  public void printCineplexAddress(Cineplex cineplex){
+    System.out.println(cineplex.getCineplexName()+" is at "+ address);
+  }
+
+  public boolean containCinema(Cinema cinema){
+    for(Cinema c : hall){
+      if(c.getCinemaID() == cinema.getCinemaID()) return true;
+    }
+    return false;
+  }
 	
 }
 

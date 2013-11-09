@@ -1,0 +1,28 @@
+import java.util.GregorianCalendar;
+
+public class Holiday{
+
+  private Calendar[] holidays;
+
+  public static final int NUM_HOLIDAY = 1;
+
+  public Holiday(){
+    this.holiday = new Calendar[NUM_HOLIDAY];
+    holiday[0] = new GregorianCalendar();
+    holiday[0].set(Calendar.MONTH, 1);
+    holiday[0].set(Calendar.DAY, 1);
+  }
+
+  public boolean todayIsHoliday(){
+    Calendar today = new GregorianCalendar();
+    for(Calendar h : holidays){
+      if(today.get(Calendar.MONTH) == h.get(Calendar.MONTH) &&
+         today.get(Calendar.DAY) == h.get(Calendar.DAY)){
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
+  
+}

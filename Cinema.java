@@ -1,92 +1,63 @@
-
 public class Cinema {
-  private int cinemaId;
+  private int cinemaID;
+  private int cinemaNumber;
   private int capacity;
-  private Seat seat[];
-  private DoubleSeat doubleSeat[];
   private int seatsPerRow;
   private String cinemaType;
-  private Cineplex cineplex;
-	
-  public Cinema(int cinema_Id)
-  {
-    cinemaId = cinema_Id;
-    //read from database to get all the attributed of the cinema
-    //........
+  
+  public Cinema(int cinema_ID,
+                int cinemaNumber,
+                int capacity,
+                int seatsPerRow,
+                String cinemaType){
+    this.cinemaID = cinema_ID;
+    this.cinemaNumber = cinemaNumber;
+    this.capacity = capacity;
+    this.seatsPerRow = seatsPerRow;
+    this.cinemaType = cinemaType;
   }
-  public Cinema()
-  {
-    cinemaId = 0;
-    //read from database to get all the attributed of the cinema
-    //........
+  
+  public final int getCinemaNumber() {
+    return cinemaNumber;
   }
-  public int getCinemaId()
-  {
-    return cinemaId;
+
+  public final void setCinemaNumber(final int cinemaNumber) {
+    this.cinemaNumber = cinemaNumber;
   }
-  public int getCapacity()
-  {
+
+  public int getCinemaID(){
+    return cinemaID;
+  }
+
+  public int getCapacity(){
     return capacity;
   }
-  public String getCinemaClass()
-  {
+
+  public String getCinemaType(){
     return cinemaType;
   }
-  public int getSeatsPerRow()
-  {
+
+  public int getSeatsPerRow(){
     return seatsPerRow;
   }
-  public boolean isFull()
-  {
-    int i;
-    for (i=0;i<seat.length;i++)
-    {
-      if (seat[i].isOccupied() == false)
-        return false;
-    }
-    return true;
-  }
-  public void printSeats()
-  {
-    int i,j;
-    System.out.println("-----Seats of Cinema "+ cinemaId+"------");
-    System.out.print("  ");
-    for(i = 0; i < seatsPerRow; i++)
-      System.out.print(" col "+i);
-    for (i = 0;i < seat.length/seatsPerRow + 1;i++)
-    {
-      System.out.print("row "+ (i+1));
-      for(j = 0; j < seatsPerRow; j++)
-        seat[i*seatsPerRow + j].printSeat();
-      System.out.println();
-    }
-  }
-  public void printEmptySeats()
-  {
-    int i,j;
-    System.out.println("-----Seats of Cinema "+ cinemaId+"------");
-    System.out.print("  ");
-    for(i = 0; i < seatsPerRow; i++)
-      System.out.print(" col "+i);
-    for (i = 0;i < seat.length/seatsPerRow + 1;i++)
-    {
-      System.out.print("row "+ (i+1));
-      for(j = 0; j < seatsPerRow; j++)
-      {
-        if(seat[i*seatsPerRow + j].isOccupied()==true)
-          System.out.print("   ");
-        else
-          seat[i*seatsPerRow + j].printSeat();
-      }
-      System.out.println();
-    }
+
+  public void setCinemaID(int cinemaID) {
+    this.cinemaID = cinemaID;
   }
 
-  public Cineplex getCineplex(){
-    return this.cineplex
+  public void setCapacity(int capacity) {
+    this.capacity = capacity;
   }
 
-  public Cineplex setCineplex(Cineplex cineplex){
-    this.cineplex = cineplex;
+  public void setSeatsPerRow(int seatsPerRow) {
+    this.seatsPerRow = seatsPerRow;
+  }
+
+  public void setCinemaType(String cinemaType) {
+    this.cinemaType = cinemaType;
+  }
+
+  public int getNumOfColumn(){
+    return this.capacity / this.seatsPerRow;
   }
 }

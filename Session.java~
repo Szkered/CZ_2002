@@ -1,84 +1,93 @@
-public class Session{
+import java.util.GregorianCalendar;
+import java.util.Calendar;
 
-  
-	private Time time;
-  
-	private Cinema cinema;
-  
-	private Movie movie;
+public class Schedule{
 
-  
-	public Session(Time time, Cinema cinema, Movie movie){
+  private Calendar startTime;
+  private Calendar endTime;
+  private Movie movie;
+  private Cinema cinema;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Constructor & Get Set
+  ////////////////////////////////////////////////////////////////////////////////
+
+  public Schedule(int hour, int minute, int dayOfWeek, Cinema cinema, Movie movie){
+    startTime = new GregorianCalendar();
+    startTime.set(Calendar.HOUR, hour);
+    startTime.set(Calendar.MINUTE, minute);
+    startTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
     
-	this.time = time;
+    int lengthHour = movie.getLength() / 60;
+    int lengthMinute = movie.getLength() % 60;
     
-	this.cinema = cinema;
+    endTime = (Calendar)startTime.clone();
+    endTime.add(Calendar.HOUR, lengthHour);
+    endTime.add(Calendar.MINUTE, lengthMinute);
     
-	this.movie = movie;
-  
-}
-
-  
-public final Time getTime() {
-   
- 	return time;
- 
-}
-
-  
-public final void setTime(final Time time) {
-   
- 	this.time = time;
-  
-}
-
-  
-public final Cinema getCinema() {
-   
- 	return cinema;
-  
-}
-
-  
-public final void setCinema(final Cinema cinema) {
-   
- 	this.cinema = cinema;
- 
-}
-  
-  
-public final Cineplex getCineplex() {
-    
-	return cineplex;
-  
-}
-
- 
-public final void setCineplex(final Cineplex cineplex) {
-    
-	this.cineplex = cineplex;
-  
-}
-
-  
-public final Movie getMovie() {
-    
-	return movie;
- 
- }
-
-  
-public final void setMovie(final Movie movie) {
-    
-	this.movie = movie;
-  
-}
-
-  
-public void printSession(){
-    
-	System.out.println(movie.getName()+' '+time+' '+cinema.getCinemaId()+' '+cinema.getCineplex());
+    this.cinema = cinema;
+    this.movie = movie;
   }
 
+  public final Cinema getCinema() {
+    return cinema;
+  }
+
+  public final void setCinema(final Cinema cinema){
+    this.cinema = cinema;
+  }
+  
+  public final Movie getMovie() {
+    return movie;
+  }
+
+  public final void setMovie(final Movie movie) {
+    this.movie = movie;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Time
+  ////////////////////////////////////////////////////////////////////////////////
+
+  
+  public final Calendar getStartTime() {
+    return startTime;
+  }
+  
+  public final int getStartHour() {
+    return startTime.get(Calendar.HOUR);
+  }
+  
+  public final int getStartMinute() {
+    return startTime.get(Calendar.MINUTE);
+  }
+
+  public final void setStartTime(int hour, int minute) {
+    startTime.set(Calendar.HOUR, hour);
+    startTime.set(Calendar.MINUTE, minute);
+  }
+
+  public final Calendar getEndTime() {
+    return endTime;
+  }
+  public final int getEndHour() {
+    return endTime.get(Calendar.HOUR);
+  }
+  
+  public final int getEndMinute() {
+    return endTime.get(Calendar.MINUTE);
+  }
+
+  public final int getDayOfWeek(){
+    return startTime.get(Calendar.DAY_OF_WEEK);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Print
+  ////////////////////////////////////////////////////////////////////////////////
+  
+  public String toString(){
+    return "Showtime: " + getStartHour() + ":" + getStartMinute() + "@ Cinema" + cinema.getCinemaNumber();
+  }
 
 }

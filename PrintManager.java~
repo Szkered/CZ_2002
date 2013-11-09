@@ -1,0 +1,8 @@
+public class PrintManager{
+
+  public void printCineplexAddress(Cineplex cineplex){
+    System.out.println(cineplexName+" is at "+address);
+  }
+
+  
+}

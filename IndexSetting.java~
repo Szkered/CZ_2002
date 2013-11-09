@@ -1,0 +1,81 @@
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class IndexSetting{
+  private Session session;
+  private int customerType;
+  
+  private double customerTypeIndex=1;
+  private double threeDIndex=1;
+  private double blockBusterIndex=1;
+  private double holidayIndex=1;
+  private double cinemaClassIndex=1;
+  private Calendar[] holidays;
+  
+  public IndexSetting(Session session, int CustomerType,Calendar[] holidays) {
+    this.session = session;
+    this.customerType= CustomerType;
+    this.holidays=holidays;
+  }
+	
+	
+  public double getCustomerTypeIndex() {
+    return customerTypeIndex;
+  }
+  public void setCustomerTypeIndex() {
+    if(customerType==2){
+      this.customerTypeIndex=0.8;
+    }
+    if(customerType==1){
+      this.customerTypeIndex=0.9;
+    }
+		
+  }
+
+  public double getThreeDIndex() {
+    return threeDIndex;
+  }
+  public void setThreeDIndex(double threeDIndex) {
+    if(session.getMovie().getIs3D()==true){
+      this.threeDIndex=2;
+    }
+  }
+	
+	
+	
+	
+  public double getBlockBusterIndex() {
+    return blockBusterIndex;
+  }
+  public void setBlockBusterIndex(double blockBusterIndex) {
+    if(session.getMovie().getIsBlockBuster()==true){
+      this.blockBusterIndex=2;
+    }
+  }
+	
+  public double getHolidayIndex() {
+    return holidayIndex;
+  }
+  
+  public void setHolidayIndex() {
+    Holiday h = new Holiday();
+    if(h.todayIsHoliday()){
+      this.holidayIndex=0.6;      
+    }
+  }
+	
+  public double getCinemaClassIndex() {
+    return cinemaClassIndex;
+  }
+  public void setCinemaClassIndex() {
+    if(session.getCinema().getCinemaClass()=="1"){
+      this.cinemaClassIndex=2;
+    }
+    if(session.getCinema().getCinemaClass()=="2"){
+      this.cinemaClassIndex=1.5;
+    }
+  }
+	
+	
+
+}

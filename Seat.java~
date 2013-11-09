@@ -59,7 +59,7 @@ public class Seat {
   }
 
   public String toString(){
-    return "Row: " + getRow(seatID) + "Number: " + getCol(seatID);
+    return "Row: " + getRow(seatID) + "Number: " + getNumber(seatID)
   }
   
 }

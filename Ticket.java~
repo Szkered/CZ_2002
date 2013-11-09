@@ -1,0 +1,34 @@
+public class Ticket {
+  
+  private double price;
+  private Seat seat;
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  public Ticket(Seat seat, int customerType){
+    basicPrice = seat.getSession().getMovie().getBasicPrice();
+    this.seat = seat;
+    this.price = this.calculatePrice(basicPrice, customerType); // init in main
+  }
+  
+  public double getPrice(){
+    return this.price;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  public double calculatePrice(double basicPrice, int customerType){// passed in through purchase in main
+    double finalprice=0;
+    IndexSetting index=new IndexSetting(session, customerType);
+    finalprice=basicPrice*index.getBlockBasterIndex()
+        *index.getCinemaClassIndex()*index.getCustomerTypeIndex()
+        *index.getHolidayIndex()*index.getThreeDIndex();
+
+    return finalprice;
+  }
+
+  public void toString(){
+    return seat.getSession() + "\n====================SEAT=====================\n" + seat
+        + "\n====================PRICE=====================\n" + price;
+  }
+}

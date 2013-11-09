@@ -1,0 +1,74 @@
+package assignment2002;
+
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class DataBaseDoubleSeat {
+
+    //load Double Seats
+    public static ArrayList<DoubleSeat> loadDoubleSeat(){
+        try{
+            //temp seat arraylist to be returned
+            ArrayList<DoubleSeat> doubleSeats = new ArrayList<DoubleSeat>();
+
+            Scanner sc = new Scanner(new File("database_doubleseat.txt"));
+            String[] aDoubleSeatInfo = new String[3];
+            while(sc.hasNextLine()){
+                StringTokenizer sep = new StringTokenizer(sc.nextLine(),"|");
+                //store all info of a single movie
+                for (int i = 0; i < 3; i ++)
+                    aDoubleSeatInfo[i] = sep.nextToken().trim();
+                DoubleSeat d = new DoubleSeat(Integer.parseInt(aDoubleSeatInfo[0]));
+                //read in seat status
+                if (aDoubleSeatInfo[1].equals("false"))
+                    d.unAssignSeat();
+                else
+                    d.assignSeat(Integer.parseInt(aDoubleSeatInfo[2]));
+
+                doubleSeats.add(d);
+            }
+            return doubleSeats;
+        }catch(IOException e){
+            System.out.println("Error >>>" +e.getMessage());
+        }
+        return null;
+    }
+
+    //save
+    public static void saveDoubleSeat(DataBase dataBase){
+        BufferedWriter writer = null;
+        try {
+            //choose the file to be modified
+            File targetFile = new File("database_doubleseat.txt");
+
+            writer = new BufferedWriter(new FileWriter(targetFile));
+            for (int i =0; i<dataBase.getCinemaDB().size();i++){
+                for (int j=0; j<dataBase.getCinemaDB().get(i).getDoubleSeat().length; j++){
+                    writer.write(dataBase.getCinemaDB().get(i).getDoubleSeat()[j].getSeatId()+"|");
+                    writer.write(dataBase.getCinemaDB().get(i).getDoubleSeat()[j].isOccupied()+"|");
+                    writer.write(dataBase.getCinemaDB().get(i).getDoubleSeat()[j].getCustumerId()+"|");
+                    writer.write("\n");
+                }
+            }
+            System.out.println("DoubleSeat Information Saved.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Close the writer regardless of what happens...
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+}
